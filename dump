@@ -57,3 +57,27 @@ end as "P"
 from BST
 order by n;
 --a node would be an inner if it's parent's value is not null (it's parent has a parent)
+
+
+--uses the union function to remove dupicates and exists and I haven't used these before
+--I honestly do not understand this at all because the question is kinda confusing
+select a.x, a.y 
+from functions as a
+where a.x = a.y and (
+    select count(*) 
+    from functions 
+    where x = a.x and y = a.y) > 1 
+ --reads as find a.x and a.y values where a.x and a.y are equal and there is more than one that match their values. 
+ --this I believe is what finds the pair
+    
+union  
+  
+select a.x, a.y
+from functions as a
+where exists (
+    select x, y
+    from functions 
+    where a.x = y and a.y = x and a.x < x) 
+order by x;
+--the a.x < x makes sense because x1 has to be less than and equal to y1 and if y1 is equal to x2 then x1 should be less than x2
+--I think using union makes this cleaner and easier
