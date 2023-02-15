@@ -1,15 +1,34 @@
 
+select m.hacker_id, h.name, sum(score) as total_score from
+(select hacker_id, challenge_id, max(score) as score
+from Submissions group by hacker_id, challenge_id) as m
+join Hackers as h
+on m.hacker_id = h.hacker_id
+group by m.hacker_id, h.name
+having total_score > 0
+order by total_score desc, m.hacker_id;
 
+--concat combines multiple expressions into one "row"
+select concat(name, '(', substring(occupation, 1, 1), ')') as name
+from occupations
+order by name
+select concat('There are a total of', ' ', count(occupation), ' ', 
+lower(occupation), 's.') as profession
+from occupations
+group by occupation
+order by profession
+;
 
-
-
-
-
+-creates a table using MySql
 select Doctor, Professor, Singer, Actor 
 from 
+--assigns the new columns titles to the values from the original table 
 (select NameOrder, 
-max(case occupation when 'Doctor' then name end) as Doctor),
-max(case occupation when 'Professor' then name end) as Professor),
-max(case occupation when 'Singer' then name end) as Singer),
-max(case occupation when 'Actor' then name end) as Actor)
-from (select occupation, name, row_number() over(partition by Occupation order by name asc) as NameOrder from Occupations) as NameLists) as Names
+max(case occupation when 'Doctor' then name end) as Doctor,
+max(case occupation when 'Professor' then name end) as Professor,
+max(case occupation when 'Singer' then name end) as Singer,
+max(case occupation when 'Actor' then name end) as Actor
+--alphabetizes the names using the row_number() function 
+from (select occupation, name, row_number() over(partition by Occupation order by name asc) as NameOrder from Occupations) as NameLists group by NameOrder) as Names
+--row_number() assign a sequential number to each row in the result set
+--partition by breaks the rows into smaller sets similar to group by, order by orders the rows 
