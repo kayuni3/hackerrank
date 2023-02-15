@@ -80,4 +80,4 @@ where exists (
     where a.x = y and a.y = x and a.x < x) 
 order by x;
 --the a.x < x makes sense because x1 has to be less than and equal to y1 and if y1 is equal to x2 then x1 should be less than x2
---I think using union makes this cleaner and easier
+--I think using union makes this cleaner and easier, basically one query finds the pairs and then other finds the x<y values
