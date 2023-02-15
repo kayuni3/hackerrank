@@ -46,3 +46,14 @@ as Names
 --partition by breaks the rows into smaller sets similar to group by, order by orders the rows 
 -- a link to more info for pivot tables using MySql https://www.dbrnd.com/2015/08/arrange-rows-to-columns-pivot-table-in-mysql/
 --link to more info for row_number() function https://www.mysqltutorial.org/mysql-window-functions/mysql-row_number-function/
+
+--Binary Tree
+select n,
+case 
+when p is null then 'Root'
+when n in (select p from BST) then 'Inner'
+else 'Leaf'
+end as "P"
+from BST
+order by n;
+--a node would be an inner if it's parent's value is not null (it's parent has a parent)
