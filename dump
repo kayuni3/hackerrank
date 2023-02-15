@@ -44,4 +44,5 @@ group by NameOrder)
 as Names
 --row_number() assign a sequential number to each row in the result set
 --partition by breaks the rows into smaller sets similar to group by, order by orders the rows 
--- a link to more info https://www.dbrnd.com/2015/08/arrange-rows-to-columns-pivot-table-in-mysql/
+-- a link to more info for pivot tables using MySql https://www.dbrnd.com/2015/08/arrange-rows-to-columns-pivot-table-in-mysql/
+--link to more info for row_number() function https://www.mysqltutorial.org/mysql-window-functions/mysql-row_number-function/
