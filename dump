@@ -8,6 +8,8 @@ on m.hacker_id = h.hacker_id
 group by m.hacker_id, h.name
 having total_score > 0
 order by total_score desc, m.hacker_id;
+--having is used instead of where when you use aggregate functions like sum and max here we used greater than 0, sum, and max
+--link to more info https://www.sqltutorial.org/sql-having/
 
 --concat combines multiple expressions into one "row"
 --left can also be used for substring
@@ -25,7 +27,8 @@ order by profession
 select Doctor, Professor, Singer, Actor 
 from 
 --assigns the new columns titles to the values from the original table
---not sure why max is used 
+--not sure why max is used
+--NameOrder is row criteria and then the case when then statements make the columns 
 (select NameOrder, 
 max(case occupation when 'Doctor' then name end) as Doctor,
 max(case occupation when 'Professor' then name end) as Professor,
@@ -41,3 +44,4 @@ group by NameOrder)
 as Names
 --row_number() assign a sequential number to each row in the result set
 --partition by breaks the rows into smaller sets similar to group by, order by orders the rows 
+-- a link to more info https://www.dbrnd.com/2015/08/arrange-rows-to-columns-pivot-table-in-mysql/
