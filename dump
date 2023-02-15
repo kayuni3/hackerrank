@@ -1,4 +1,5 @@
-
+--a good example that you don't have to pull columns just from tables
+--in a way query creates a table and so we can pull from there
 select m.hacker_id, h.name, sum(score) as total_score from
 (select hacker_id, challenge_id, max(score) as score
 from Submissions group by hacker_id, challenge_id) as m
@@ -9,6 +10,7 @@ having total_score > 0
 order by total_score desc, m.hacker_id;
 
 --concat combines multiple expressions into one "row"
+--left can also be used for substring
 select concat(name, '(', substring(occupation, 1, 1), ')') as name
 from occupations
 order by name
@@ -19,16 +21,23 @@ group by occupation
 order by profession
 ;
 
--creates a table using MySql
+-creates a table using MySql what we add in the initial select line becomes are new columns 
 select Doctor, Professor, Singer, Actor 
 from 
---assigns the new columns titles to the values from the original table 
+--assigns the new columns titles to the values from the original table
+--not sure why max is used 
 (select NameOrder, 
 max(case occupation when 'Doctor' then name end) as Doctor,
 max(case occupation when 'Professor' then name end) as Professor,
 max(case occupation when 'Singer' then name end) as Singer,
 max(case occupation when 'Actor' then name end) as Actor
---alphabetizes the names using the row_number() function 
-from (select occupation, name, row_number() over(partition by Occupation order by name asc) as NameOrder from Occupations) as NameLists group by NameOrder) as Names
+--alphabetizes the names using the row_number() function, it "makes a table"/query and then pulls the occupation values from this alphabetical "table" called Names instead
+--it assigns each name a row based on this alphabetical order and seperates them based on occupation with the partition by clause
+--so basically doctor will be sorted in the first lets say 5 rows and then singer will be sorted in the next 6 
+from 
+(select occupation, name, row_number() over(partition by Occupation order by name asc) as NameOrder 
+from Occupations) as NameLists 
+group by NameOrder) 
+as Names
 --row_number() assign a sequential number to each row in the result set
 --partition by breaks the rows into smaller sets similar to group by, order by orders the rows 
