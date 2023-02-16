@@ -11,6 +11,8 @@ order by total_score desc, m.hacker_id;
 --having is used instead of where when you use aggregate functions like sum and max here we used greater than 0, sum, and max
 --link to more info https://www.sqltutorial.org/sql-having/
 
+-------------------------------
+
 --concat combines multiple expressions into one "row"
 --left can also be used for substring
 select concat(name, '(', substring(occupation, 1, 1), ')') as name
@@ -20,8 +22,9 @@ select concat('There are a total of', ' ', count(occupation), ' ',
 lower(occupation), 's.') as profession
 from occupations
 group by occupation
-order by profession
-;
+order by profession;
+
+------------------------------------
 
 -creates a table using MySql what we add in the initial select line becomes are new columns 
 select Doctor, Professor, Singer, Actor 
@@ -47,6 +50,8 @@ as Names
 -- a link to more info for pivot tables using MySql https://www.dbrnd.com/2015/08/arrange-rows-to-columns-pivot-table-in-mysql/
 --link to more info for row_number() function https://www.mysqltutorial.org/mysql-window-functions/mysql-row_number-function/
 
+--------------------------------------
+
 --Binary Tree
 select n,
 case 
@@ -58,6 +63,7 @@ from BST
 order by n;
 --a node would be an inner if it's parent's value is not null (it's parent has a parent)
 
+-----------------------------------------
 
 --uses the union function to remove dupicates and exists and I haven't used these before
 --I honestly do not understand this at all because the question is kinda confusing
@@ -81,3 +87,34 @@ where exists (
 order by x;
 --the a.x < x makes sense because x1 has to be less than and equal to y1 and if y1 is equal to x2 then x1 should be less than x2
 --I think using union makes this cleaner and easier, basically one query finds the pairs and then other finds the x<y values
+
+-----------------------------------------
+
+select a.contest_id, a.hacker_id, a.name, sum(e.total_submissions), sum(e.total_accepted_submissions), sum(g.total_views) , sum(g.total_unique_views) 
+from contests as a
+join colleges as b 
+on a.contest_id = b.contest_id
+join challenges as c
+on b.college_id = c.college_id
+
+--returns the results from the above table^^ and any matches from the one below
+--differs from inner join because it will return values for the left table even if there are no matches in the right table 
+LEFT JOIN
+(SELECT d.challenge_id, SUM(d.total_submissions) AS total_submissions, SUM(d.total_accepted_submissions) AS total_accepted_submissions 
+FROM Submission_Stats AS d 
+GROUP BY d.challenge_id) AS e
+ON c.challenge_id = e.challenge_id
+
+LEFT JOIN
+(SELECT f.challenge_id, SUM(f.total_views) AS total_views, SUM(total_unique_views) AS total_unique_views 
+FROM View_Stats AS f
+GROUP BY f.challenge_id) AS g
+ON c.challenge_id = g.challenge_id
+GROUP BY a.contest_id, a.hacker_id, a.name
+HAVING SUM(e.total_submissions)+
+       SUM(e.total_accepted_submissions)+
+       SUM(g.total_views)+
+       SUM(g.total_unique_views) > 0
+order by a.contest_id;
+-- inner join vs left/right join https://www.sqlshack.com/learn-sql-inner-join-vs-left-join/
+--challenge link https://www.hackerrank.com/challenges/interviews/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
