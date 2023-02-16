@@ -104,6 +104,8 @@ LEFT JOIN
 FROM Submission_Stats AS d 
 GROUP BY d.challenge_id) AS e
 ON c.challenge_id = e.challenge_id
+--group by is used bc the table has challenge id that repeat for example data couldve been constantly added as new entries at each stop
+--I'm thinking we're using left join because some contests/challenges may not have submissions or views but we still want to add it to our table
 
 LEFT JOIN
 (SELECT f.challenge_id, SUM(f.total_views) AS total_views, SUM(total_unique_views) AS total_unique_views 
@@ -111,6 +113,8 @@ FROM View_Stats AS f
 GROUP BY f.challenge_id) AS g
 ON c.challenge_id = g.challenge_id
 GROUP BY a.contest_id, a.hacker_id, a.name
+
+--if the sum of all four is greater than 0 then we know that all four sums are not zero
 HAVING SUM(e.total_submissions)+
        SUM(e.total_accepted_submissions)+
        SUM(g.total_views)+
