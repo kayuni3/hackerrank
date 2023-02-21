@@ -153,4 +153,25 @@ WHERE NUMB<=1000 AND NOT EXISTS(
         --NOT EXISTS SO NUMA IS LESS THAN ONE AND GREATER THAN NUMB
     )
 --info about info schema https://www.hackerrank.com/challenges/draw-the-triangle-1/forum/comments/210662
---here we used two table since we need 1000 entries 
+--here we used two table since we need 1000 entries
+--a prime number is a number that is only divisble by itself and one 
+
+--better version of above code
+SET @potential_prime = 1;
+SET @divisor = 1;
+--sets default values to 1
+SELECT GROUP_CONCAT(POTENTIAL_PRIME SEPARATOR '&') FROM
+    (SELECT @potential_prime := @potential_prime + 1 AS POTENTIAL_PRIME FROM
+    information_schema.tables t1,
+    information_schema.tables t2
+    LIMIT 1000) list_of_potential_primes
+WHERE NOT EXISTS(
+	SELECT * FROM
+        (SELECT @divisor := @divisor + 1 AS DIVISOR FROM
+	    information_schema.tables t4,
+        information_schema.tables t5
+	    LIMIT 1000) list_of_divisors
+	WHERE MOD(POTENTIAL_PRIME, DIVISOR) = 0 AND POTENTIAL_PRIME <> DIVISOR);
+    --mod funct returns the remainder of two numbs, so return numbers who remainders are not equal to zero and potential prime and divisor are equal
+    --the last statement makes a number prime  
+    
