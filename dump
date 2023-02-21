@@ -126,9 +126,7 @@ order by a.contest_id;
 --this challenge uses group_concat function link: https://www.hackerrank.com/challenges/print-prime-numbers/problem?isFullScreen=true
 --group_concat explained https://www.mysqltutorial.org/mysql-group_concat/
 --used group concat because result should be a single line 
-SELECT GROUP_CONCAT(
-NUMB 
-SEPARATOR '&')
+SELECT GROUP_CONCAT(NUMB SEPARATOR '&')
 FROM (
     SELECT @num:=@num+1 as NUMB 
     --declares a variable num as numb 
@@ -142,15 +140,17 @@ FROM (
 WHERE NUMB<=1000 AND NOT EXISTS(
         SELECT * FROM (
             SELECT @nu:=@nu+1 as NUMA
-            --declares a variable nu
+            --declares a variable nu AS NUMS 1-1000
             FROM
                 information_schema.tables t1,
                 information_schema.tables t2,
                 (SELECT @nu:=1) tmp1
+                --sets default value of nu = 1 
                 LIMIT 1000
             ) tatata
         WHERE FLOOR(NUMB/NUMA)=(NUMB/NUMA) AND NUMA<NUMB AND NUMA>1
         --floor returns the largest integer value that is <= to a number
+        --NOT EXISTS SO NUMA IS LESS THAN ONE AND GREATER THAN NUMB
     )
 --info about info schema https://www.hackerrank.com/challenges/draw-the-triangle-1/forum/comments/210662
 --here we used two table since we need 1000 entries 
