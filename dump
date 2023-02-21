@@ -122,3 +122,30 @@ HAVING SUM(e.total_submissions)+
 order by a.contest_id;
 -- inner join vs left/right join https://www.sqlshack.com/learn-sql-inner-join-vs-left-join/
 --challenge link https://www.hackerrank.com/challenges/interviews/problem?isFullScreen=true&h_r=next-challenge&h_v=zen&h_r=next-challenge&h_v=zen
+
+--this challenge uses group_concat function link: https://www.hackerrank.com/challenges/print-prime-numbers/problem?isFullScreen=true
+--group_concat explained https://www.mysqltutorial.org/mysql-group_concat/
+SELECT GROUP_CONCAT(NUMB SEPARATOR '&')
+FROM (
+    SELECT @num:=@num+1 as NUMB 
+    --declares a variable num as numb 
+    FROM
+    information_schema.tables t1,
+    information_schema.tables t2,
+    (SELECT @num:=1) tmp
+) tempNum
+--this selects nums 1-1000
+WHERE NUMB<=1000 AND NOT EXISTS(
+        SELECT * FROM (
+            SELECT @nu:=@nu+1 as NUMA
+            --declares a variable nu
+            FROM
+                information_schema.tables t1,
+                information_schema.tables t2,
+                (SELECT @nu:=1) tmp1
+                LIMIT 1000
+            ) tatata
+        WHERE FLOOR(NUMB/NUMA)=(NUMB/NUMA) AND NUMA<NUMB AND NUMA>1
+        --floor returns the largest integer value that is <= to a number
+    )
+
