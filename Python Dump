@@ -6,22 +6,37 @@
 #import re
 import re
 
+#create a variable for number of lines/card #s
 n = int(input())
+
+#create an array called card numbers
 
 #regex pattern using verbose to make it more readable
 pat1 = re.compile(r"""
 ^[456] #starts with 4, 5, or 6 
 \d{3}  #followed by 3 digits
 (-?\d{4}){3}  #optional hyphen followed by 4 digits (3 times)
-;
-""", re.verbose)
+$        #end string here for exactly 16 digits
+""", re.X)
 
 #pattern for repeating numbers
-pat2= "(\d)\1{3,}" #{3,} where digit matches 3 more digits
+pat2= r'(\d)\1{3,}' 
+#{3,} where digit matches 3 more digits
 #\1 matches whatever the first group match
 
-card_number = input()
+#for pat2 we must skip over hypens in some card numbers
 
+
+#adding a loop using range
 #n is the number of credit card numbers so we want the loop to run n times
 for i in range(n):
-    if card_number
+    card_number = (input())
+    skip = card_number.replace('-','')
+    
+#when we use pat2 we want to replace the hyphen
+
+    if pat1.match(card_number) and not re.search(pat2, skip):
+        print("Valid") 
+    else:
+        print("Invalid")
+
