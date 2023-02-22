@@ -46,3 +46,28 @@ regex_integer_in_range = r'^[1-9][\d]{5}$'	# Do not delete 'r'.
 regex_alternating_repetitive_digit_pair = r'(\d)(?=\d\1)'	# Do not delete 'r'.\d
 
 
+#regex again!
+ import re
+
+
+t = int(input())
+    
+for i in range(t):
+    
+    n = input()
+    
+    #using regex to determine if string is a number
+    num_pat = re.compile(r'
+    ^[-+]? #must start with with - or +
+    \d*
+    \.
+    \d+
+    $
+    ') 
+    
+
+    if num_pat.match(n):
+        print(True)
+    else:
+        print(False)
+ 
