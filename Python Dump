@@ -1,0 +1,27 @@
+#regex problem https://www.hackerrank.com/challenges/validating-credit-card-number/problem?isFullScreen=true&h_r=next-challenge&h_v=zen
+#link to more info https://www.tutorialspoint.com/python/python_reg_expressions.htm
+
+##hint is in the intro to use regex 
+
+#import re
+import re
+
+n = int(input())
+
+#regex pattern using verbose to make it more readable
+pat1 = re.compile(r"""
+^[456] #starts with 4, 5, or 6 
+\d{3}  #followed by 3 digits
+(-?\d{4}){3}  #optional hyphen followed by 4 digits (3 times)
+;
+""", re.verbose)
+
+#pattern for repeating numbers
+pat2= "(\d)\1{3,}" #{3,} where digit matches 3 more digits
+#\1 matches whatever the first group match
+
+card_number = input()
+
+#n is the number of credit card numbers so we want the loop to run n times
+for i in range(n):
+    if card_number
