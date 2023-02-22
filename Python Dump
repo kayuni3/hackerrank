@@ -1,15 +1,14 @@
 #regex problem https://www.hackerrank.com/challenges/validating-credit-card-number/problem?isFullScreen=true&h_r=next-challenge&h_v=zen
 #link to more info https://www.tutorialspoint.com/python/python_reg_expressions.htm
+#additonal link https://docs.python.org/3/library/re.html
 
 ##hint is in the intro to use regex 
 
-#import re
+#must import re to use it 
 import re
 
 #create a variable for number of lines/card #s
 n = int(input())
-
-#create an array called card numbers
 
 #regex pattern using verbose to make it more readable
 pat1 = re.compile(r"""
