@@ -120,4 +120,24 @@ for j in range(t):
         print(sChar[i], end="")
 
     print(" ")
-    
+
+# storing multiple inputs as an array using split() and map()
+
+import math
+import os
+import random
+import re
+import sys
+
+
+
+if __name__ == '__main__':
+    n = int(input().strip())
+
+    arr = list(map(int, input().rstrip().split()))
+
+    y = n - 1 
+
+for i in range(n):
+    print(arr[y], end=" ")
+    y -= 1
