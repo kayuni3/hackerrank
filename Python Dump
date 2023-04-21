@@ -141,3 +141,31 @@ if __name__ == '__main__':
 for i in range(n):
     print(arr[y], end=" ")
     y -= 1
+
+ 
+n = int(input())
+
+
+# create dictionary
+phoneBook = {}
+
+for i in range(n):
+    contact = input().split()
+    phoneBook[contact[0]] = contact[1]
+    i -= 1
+            
+while True:
+    try:
+        contactSearch = str(input())
+        
+        if contactSearch in list(phoneBook.keys()):
+            print(contactSearch, end=""), 
+            print("=", end="")
+            print(phoneBook[contactSearch])
+        else:
+            print("Not found")
+        
+    except EOFError:
+        break
+            
+ 
